@@ -1,3 +1,6 @@
-#2048 Game with Javascript
+# 2048 Game with Javascript
 
-Create game for pet project
+A 2048 famous game. 
+
+## Purpose
+Learning how to use javascript by coding a game.
