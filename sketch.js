@@ -1,6 +1,19 @@
 let grid;
 let score = 0;
 
+
+function isGameWon()  {
+    for (let i = 0; i< 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            if (grid[i][j] == 2048) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
 function isGameOver() {
     let gameOver = true;
 
@@ -17,8 +30,6 @@ function isGameOver() {
             if (j !== 3 && grid[i][j] === grid[i][j + 1]) {
                 return false;
             }
-
-
         }
     }
 
@@ -59,10 +70,11 @@ function addNumber() {
         }
     }
 
-    if (options.length > 0);
-    let spot = random(options);
-    let r = random(1);
-    grid[spot.x][spot.y] = r > 0.5 ? 2 : 4;
+    if (options.length > 0) {
+        let spot = random(options);
+        let r = random(1);
+        grid[spot.x][spot.y] = r > 0.5 ? 2 : 4;
+    }
 
 }
 
@@ -148,6 +160,11 @@ function keyPressed() {
     if (gameOver) {
         console.log("GAME OVER");
     }
+
+    let gameWon = isGameWon();
+    if  (gameWon) {
+        console.log("Game Won");
+    } 
 }
 
 function copyGrid(grid) {
@@ -206,18 +223,19 @@ function drawGrid() {
         for (let j = 0; j < 4; j++) {
             noFill();
             strokeWeight(2);
-            stroke(0);
-            rect(i*w, j*w, w, w);
-            let val = grid[i][j];
+            let val =  grid[i][j];
+            if   (val != 0) {
+                let s = "" + val;
+                stroke(0);
+                
+            }
 
+            rect(i*w, j*w, w, w);
             if (grid[i][j] !== 0) {
                 textAlign(CENTER, CENTER);
-                let s = "" + val;
-                let len = s.length - 1;
-                let sizes = [64, 64, 32, 16];
-
-                textSize(sizes[len]);
-                fill(0);
+                
+                textSize(colorAndSize[s].size);
+                fill(colorAndSize[s].color);
                 noStroke();
                 text(val, i*w + w/2, j*w + w/2);
             }
